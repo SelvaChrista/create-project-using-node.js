@@ -1,0 +1,34 @@
+const http = require("http");
+const fs = require("fs");
+
+const server = http.createServer((req, res) => {
+    if(req.method === "GET"){
+       fs.readFile("index.html",  (err, data) =>{
+
+        if(err) throw err;
+        res.end(data);
+       })
+      
+    }
+    
+    
+    if (req.url=="/add user detail" && req.method === "POST"){
+            var body ="";
+
+
+            req.on("data", (chunks)=> {
+             body += chunks.toString();
+            })
+
+                req.on ("end", ()=>{
+                    res.write(body);
+                    console.log(body);
+                })
+
+        res.end();
+    }
+
+});
+
+
+server.listen(8080);
